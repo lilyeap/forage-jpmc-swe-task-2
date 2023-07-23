@@ -33,7 +33,10 @@ class App extends Component<{}, IState> {
    * Render Graph react component with state.data parse as property data
    */
   renderGraph() {
-    return (<Graph data={this.state.data}/>)
+    // checks showGraph to ensure that the graph doesn’t render until a user clicks start button
+    if (this.state.showGraph){
+      return (<Graph data={this.state.data}/>)
+    }
   }
 
   /**
