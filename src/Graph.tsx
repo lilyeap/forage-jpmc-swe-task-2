@@ -32,7 +32,7 @@ class Graph extends Component<IProps, {}> {
 
   componentDidMount() {
     // Get element to attach the table from the DOM.
-    const elem: PerspectiveViewerElement = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
+    const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
 
     const schema = {
       stock: 'string',
@@ -46,9 +46,21 @@ class Graph extends Component<IProps, {}> {
     }
     if (this.table) {
       // Load the `table` in the `<perspective-viewer>` DOM reference.
-
-      // Add more Perspective configurations here.
       elem.load(this.table);
+
+      // setting up the graph accordingly
+      elem.setAttribute('view', 'y_line'); 
+      elem.setAttribute('column-pivots', '["stock"]');
+      elem.setAttribute('row-pivots', '["timestamp"]'); 
+      elem.setAttribute('columns', '["top_ask_price"]');
+
+      // stock & timestamp will count the num of unique stock names and timestamps, respectively
+      // top_ask_price & top_bid_price will calculate the average of its values to rule out dupes
+      elem.setAttribute('aggregates', `
+        {"stock": "distinct count", 
+        "top_ask_price": "avg",
+        "top_bid_price": "avg",
+        "timestamp": "distinct count"}`);
     }
   }
 
