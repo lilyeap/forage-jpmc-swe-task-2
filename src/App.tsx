@@ -8,6 +8,8 @@ import './App.css';
  */
 interface IState {
   data: ServerRespond[],
+  // to allow us to render the graph only under certain conditions
+  showGraph: boolean, 
 }
 
 /**
